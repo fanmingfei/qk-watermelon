@@ -22,7 +22,7 @@ export const FRUIT_RADIUS: {
     grade: 20,
   },
   danqie: {
-    radius: 30,
+    radius: 56,
     grade: 10,
     next: 'chengzi',
   },
@@ -47,8 +47,8 @@ export const FRUIT_RADIUS: {
     next: 'daxigua',
   },
   daxigua: {
-    grade: 200,
     radius: 180,
+    grade: 200,
     next: '',
   },
 };
@@ -59,8 +59,12 @@ export const CAN_USE_TYPE = [
   'fanqie',
   'danqie',
   'chengzi',
+  'yezi',
+  'hamigua',
+  'xigua',
+  'daxigua',
 ];
-export const GAME_HEIGHT = 750 * (window.innerHeight / window.innerWidth);
+export const GAME_HEIGHT = window.innerWidth > window.innerHeight ? window.innerHeight : 750 * (window.innerHeight / window.innerWidth);
 export const BODY_OPTIONS = {
   isStatic: false,
   restitution: 0.4,

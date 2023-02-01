@@ -14,7 +14,33 @@ import createBackPanel from './gameObjects/createBackPanel';
 import createWall from './gameObjects/createWall';
 import { createFruit, randomFruit } from './gameObjects/createFruit';
 import store from './store';
+
+document.body.style.margin = '0';
+document.body.style.background = '#000';
+
+const canvas = document.createElement('canvas')
+document.body.append(canvas)
+canvas.classList.add('qk-canvas')
+
+
+if (window.innerWidth > window.innerHeight) {
+  canvas.style.display = 'block'
+  canvas.style.margin = '0 auto'
+} else {
+  canvas.style.width = '100%'
+  canvas.style.height = 'auto'
+}
+
+
+
+document.body.addEventListener('touchmove', (e) => {
+  e.preventDefault()
+}, { passive: false })
+
+
 resource.addResource(res);
+
+
 
 const game = new Game({
   autoStart: true,
@@ -22,7 +48,7 @@ const game = new Game({
   systems: [
     new RendererSystem({
       transparent: true,
-      canvas: document.querySelector('#canvas'),
+      canvas,
       backgroundColor: 0xfee79d,
       width: 750,
       height: GAME_HEIGHT,
@@ -67,9 +93,9 @@ let touched = false;
 
 const touchmoveFn = (e: any) => {
   let x: any = e.data.position.x
-  if (!touched 
-    && store.currentFruit 
-    && store.currentFruit.transform 
+  if (!touched
+    && store.currentFruit
+    && store.currentFruit.transform
     && x < 750 - FRUIT_RADIUS[store.currentFruit._name].radius
     && x > FRUIT_RADIUS[store.currentFruit._name].radius) {
     store.currentFruit.transform.position.x = e.data.position.x;
@@ -103,7 +129,7 @@ evt.on('touchmove', (e) => {
 });
 
 evt.on('touchend', (e) => {
-  
+
   if (!touched) {
     touched = true;
     touchend();

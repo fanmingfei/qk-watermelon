@@ -6,22 +6,22 @@ import { GAME_HEIGHT } from '../CONST';
 export default function createWall() {
   const bottomWall = createGameObjectAddGraphicsRect(
     375,
-    GAME_HEIGHT - 10,
+    GAME_HEIGHT - 25,
     750,
-    20,
+    50,
     0xff0000
   );
   const leftWall = createGameObjectAddGraphicsRect(
     0,
     GAME_HEIGHT / 2,
-    10,
+    30,
     GAME_HEIGHT,
     0xff0000
   );
   const rightWall = createGameObjectAddGraphicsRect(
     750,
     GAME_HEIGHT / 2,
-    10,
+    30,
     GAME_HEIGHT,
     0xff0000
   );
