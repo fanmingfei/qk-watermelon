@@ -15,7 +15,7 @@ export default function createBackPanel() {
   });
   backPanel.addComponent(
     new Text({
-      text: '返回',
+      text: '成绩',
       style: {
         fontSize: 40,
         fontFamily: 'Arial',

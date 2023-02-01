@@ -1,5 +1,6 @@
 import { GameObject } from '@eva/eva.js';
 import { Img } from '@eva/plugin-renderer-img';
+import { Mask, MASK_TYPE } from '@eva/plugin-renderer-mask';
 import { CAN_USE_TYPE, FRUIT_RADIUS } from '../CONST';
 import store from '../store'
 
@@ -42,5 +43,15 @@ function buildFruit(
       resource: type,
     })
   );
+  gameObject.addComponent(
+    new Mask({
+      type: MASK_TYPE.Circle,
+      style: {
+        radius,
+        x: radius,
+        y: radius
+      }
+    })
+  )
   return gameObject;
 }

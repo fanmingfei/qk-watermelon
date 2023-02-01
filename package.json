@@ -33,6 +33,7 @@
     "@eva/plugin-renderer-event": "^1.0.0",
     "@eva/plugin-renderer-graphics": "^1.0.0",
     "@eva/plugin-renderer-img": "^1.0.0",
+    "@eva/plugin-renderer-mask": "^1.2.8",
     "@eva/plugin-renderer-render": "^1.0.0",
     "@eva/plugin-renderer-text": "^1.0.0",
     "@eva/renderer-adapter": "^1.0.0"

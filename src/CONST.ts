@@ -21,11 +21,11 @@ export const FRUIT_RADIUS: {
     next: 'hamigua',
     grade: 20,
   },
-  danqie: {
-    radius: 56,
-    grade: 10,
-    next: 'chengzi',
-  },
+  // danqie: {
+  //   radius: 25,
+  //   grade: 10,
+  //   next: 'chengzi',
+  // },
   chengzi: {
     radius: 56,
     grade: 20,
@@ -57,12 +57,10 @@ export const CAN_USE_TYPE = [
   'ningmeng',
   'mihoutao',
   'fanqie',
-  'danqie',
   'chengzi',
   'yezi',
   'hamigua',
   'xigua',
-  'daxigua',
 ];
 export const GAME_HEIGHT = window.innerWidth > window.innerHeight ? window.innerHeight : 750 * (window.innerHeight / window.innerWidth);
 export const BODY_OPTIONS = {
@@ -70,3 +68,6 @@ export const BODY_OPTIONS = {
   restitution: 0.4,
   density: 0.002,
 };
+export const COLOR = {
+  wall: 'red'
+}

@@ -1,4 +1,4 @@
-import { Game, GameObject, resource } from '@eva/eva.js';
+import { Game, GameObject, resource, RESOURCE_TYPE } from '@eva/eva.js';
 import { RendererSystem } from '@eva/plugin-renderer';
 import { GraphicsSystem } from '@eva/plugin-renderer-graphics';
 import { PhysicsSystem, Physics, PhysicsType } from '@eva/plugin-matterjs';
@@ -6,14 +6,64 @@ import { Text, TextSystem } from '@eva/plugin-renderer-text';
 import { ImgSystem } from '@eva/plugin-renderer-img';
 import { Event, EventSystem } from '@eva/plugin-renderer-event';
 
-import res from './resources';
-import { FRUIT_RADIUS, GAME_HEIGHT, BODY_OPTIONS } from './CONST';
+import originRes from './resources';
+import { FRUIT_RADIUS, GAME_HEIGHT, BODY_OPTIONS, CAN_USE_TYPE } from './CONST';
 import createBackground from './gameObjects/createBackground';
 import createGradePanel from './gameObjects/createGradePanel';
 import createBackPanel from './gameObjects/createBackPanel';
 import createWall from './gameObjects/createWall';
 import { createFruit, randomFruit } from './gameObjects/createFruit';
 import store from './store';
+import { MaskSystem } from '@eva/plugin-renderer-mask';
+
+
+const dom = document.querySelector('watermelon')
+const names = dom.getAttributeNames()
+const lvs = names.filter(name => name.indexOf('lv') === 0).map((name) => {
+  return {
+    lv: parseInt(name[2]),
+    name: name,
+    url: dom.getAttribute(name)
+  }
+}).sort((p, n) => {
+  return p.lv > n.lv ? 1 : -1
+})
+const res = lvs.map((lv) => {
+  return {
+    name: lv.name,
+    type: RESOURCE_TYPE.IMAGE,
+    src: {
+      image: {
+        type: 'png',
+        url: lv.url,
+      },
+    },
+  }
+})
+
+resource.addResource(originRes);
+resource.addResource(res);
+
+if (lvs.length === 1) {
+  alert('请设置1个以上等级')
+}
+if (lvs.length > 0) {
+  CAN_USE_TYPE.length = 0
+}
+
+lvs.forEach((lv, i) => {
+  FRUIT_RADIUS[lv.name] = {
+    radius: 30 + (180 - 30) / (lvs.length - 1) * i,
+    grade: 10 + (200 - 10) / (lvs.length - 1) * i,
+    next: lvs[i + 1]?.name
+  }
+  if (i < lvs.length - 1) {
+    CAN_USE_TYPE.push(lv.name)
+  }
+})
+console.log(res, FRUIT_RADIUS)
+
+
 
 document.body.style.margin = '0';
 document.body.style.background = '#000';
@@ -38,7 +88,6 @@ document.body.addEventListener('touchmove', (e) => {
 }, { passive: false })
 
 
-resource.addResource(res);
 
 
 
@@ -68,6 +117,7 @@ const game = new Game({
     new TextSystem(),
     new ImgSystem(),
     new EventSystem(),
+    new MaskSystem()
   ],
 });
 // @ts-ignore
@@ -83,8 +133,8 @@ game.scene.addChild(store.gradePanel);
 game.scene.addChild(backPanel);
 
 // 创建水果
-store.currentFruit = randomFruit('yingtao');
-store.currentType = 'yingtao';
+store.currentFruit = randomFruit(CAN_USE_TYPE[0]);
+store.currentType = CAN_USE_TYPE[0];
 
 game.scene.addChild(store.currentFruit);
 
